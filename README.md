@@ -1,2 +1,2 @@
-# MLFlaskCodeSpace
-Codespace for developing ML FLask Apps with Ease.
+# CVFlaskCodeSpace
+Codespace for developing Computer Vision FLask Apps with Ease.
