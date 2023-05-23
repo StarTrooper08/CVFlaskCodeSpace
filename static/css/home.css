@@ -1,0 +1,39 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  .regform {
+    width: 1000px;
+    background-color: rgb(0, 0, 0, 0.8);
+    margin: auto;
+    color: #ffffff;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    border-radius: 15px 15px 0px 0px;
+  }
+  
+  .main-form {
+    width: 1000px;
+    margin: auto;
+    background-color: rgb(0, 0, 0, 0.7);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    color: #ffffff;
+  }
+  button a {
+    color: #28a745;
+  }
+  
+  #Download:hover,
+  button a:hover {
+    color: #fff;
+    background-color: #28a745;
+    text-decoration: none;
+  }
+  img {
+    max-height: 400px;
+    max-width: 500px;
+    height: auto;
+    width: auto;
+  }

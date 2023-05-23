@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery</title>
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='myfont/css/all.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='css/gallery.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="background-color: #c5a2ce">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Welcome {{session["name"]}}</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link" id="home" href="{{url_for('home')}}"
+            >Home</a
+          >
+          
+          <a
+            class="nav-item nav-link"
+            href="{{url_for('gallery')}}"
+            class="btn btn-primary btn-block"
+            >Gallery</a
+          >
+          <a
+            class="nav-item nav-link"
+            href="{{url_for('logout')}}"
+            class="btn btn-primary btn-block"
+            >Logout</a
+          >
+        </div>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <!-- Modal heading -->
+          <form action="/delete" class="main-form" method="POST">
+            <div class="modal-header">
+              <label class="modal-title" id="exampleModalLabel"></label>
+              <input type="hidden" id="imagetitle" name="imagetitle" value="" />
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true"> × </span>
+              </button>
+            </div>
+            <!-- Modal body with image -->
+
+            <div class="modal-body">
+              <img id="modalImage" src="" />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="deletebtn" class="btn btn-danger">
+                Delete
+              </button>
+
+              <button type="button" class="btn btn-primary">Share</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="image-grid">
+      {% set count = namespace(value=1) %}{% for image in images %}
+      <div class="image-item">
+        <img
+          src="{{image}}"
+          class="image"
+          type="button"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          data-src="{{image}}"
+          alt="Image"
+          id="img{{count.value}}"
+        />
+      </div>
+      {% set count.value = count.value + 1 %}{% endfor %}
+    </div>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      $(".image").on("click", function () {
+        var source = $(this)[0];
+        //alert(source.id);
+        var filename = source.src.split("/").pop();
+        $("#modalImage").attr("src", source.src);
+        $("#exampleModalLabel").text(filename);
+        $("#deletebtn").attr("filename", filename);
+        $("#imagetitle").attr("value", filename);
+      });
+    </script>
+  </body>
+</html>

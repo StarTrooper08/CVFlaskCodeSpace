@@ -1,0 +1,28 @@
+.image-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
+    grid-gap: 20px;
+  }
+  .image-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    overflow: hidden;
+  }
+  .image-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  
+  .modal-body img {
+    width: 500px;
+    height: auto;
+  }
+  .modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
