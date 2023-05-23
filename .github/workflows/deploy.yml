@@ -4,6 +4,10 @@ on:
   push:
     branches: ['master','cartoonspace']
 
+env:
+  IMAGE: "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+  TAG: "latest"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +31,7 @@ jobs:
       
 
       - name: Before
-        run: docker image ls "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+        run: docker image ls "${{ env.IMAGE }}:${{ env.TAG }}"
 
       - name: docker-slim
         uses: kitabisa/docker-slim-action@master
@@ -35,11 +39,11 @@ jobs:
         env:
           DSLIM_HTTP_PROBE: true
         with:
-          target: ${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}:latest
+          target: ${{ env.IMAGE }}:latest
           overwrite: ${{ matrix.overwrite }}
 
       - name: After
-        run: docker image ls "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+        run: docker image ls "${{ env.IMAGE }}"
 
       - name: Report
         env:
