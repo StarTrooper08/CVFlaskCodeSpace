@@ -5,7 +5,7 @@ on:
     branches: ['master','cartoonspace']
 
 env:
-  IMAGE: "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+  IMAGE: "atharvas08/cvflaskcodespace"
   TAG: "latest"
 
 jobs:
