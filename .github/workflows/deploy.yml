@@ -9,6 +9,10 @@ env:
   TAG: "latest"
 
 jobs:
+  docker-slim:
+    strategy:
+      matrix:
+        overwrite: [true, false]
   build:
     runs-on: ubuntu-latest
 
