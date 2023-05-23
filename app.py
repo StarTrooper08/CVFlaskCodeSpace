@@ -13,7 +13,7 @@ import tempfile
 import json
 
 
-UPLOAD_FOLDER = '/workspaces/CVFlaskCodeSpace/static/uploads/' #pass the upload folder path here(currently passed the container upload folder path)
+UPLOAD_FOLDER = '/app/static/uploads/' #pass the upload folder path here(currently passed the container upload folder path)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
