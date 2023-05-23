@@ -2,7 +2,7 @@ name: Build and Publish Docker Image to Docker Hub
 
 on:
   push:
-    branches: ['master']
+    branches: ['master','cartoonspace']
 
 jobs:
   build:
@@ -19,7 +19,29 @@ jobs:
           repo: ${{secrets.DOCKER_REPO}}
           
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
+          file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}:latest
+      
+
+      - name: Before
+        run: docker image ls "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+
+      - name: docker-slim
+        uses: kitabisa/docker-slim-action@master
+        id: slim
+        env:
+          DSLIM_HTTP_PROBE: true
+        with:
+          target: ${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}:latest
+          overwrite: ${{ matrix.overwrite }}
+
+      - name: After
+        run: docker image ls "${{ secrets.DOCKER_USER }}/${{secrets.DOCKER_REPO}}"
+
+      - name: Report
+        env:
+          REPORT: ${{ steps.slim.outputs.report }} # report is JSON format
+        run: echo "${REPORT}"
